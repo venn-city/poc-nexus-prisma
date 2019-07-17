@@ -1,0 +1,9 @@
+endpoint: https://eu1.prisma.sh/deborah-755ff1/persistencyNexus/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: javascript-client
+    output: ./src/generated/prisma-client/
+hooks:
+  post-deploy:
+    - npx nexus-prisma-generate --client ./src/generated/prisma-client --output ./src/generated/nexus-prisma

@@ -1,0 +1,52 @@
+type User {
+  id:                   ID!         @id @unique
+  email:                String!     @unique
+  firstName:            String!
+  middleName:           String
+  lastName:             String!
+  socialSecurityNumber: String
+  comment:              String
+  metadata:             Json
+  createdAt:            DateTime!   @createdAt
+  updatedAt:            DateTime!   @updatedAt
+  deletedAt:            DateTime
+
+}
+
+type Transaction {
+  id:                     ID!       @id @unique
+  user:                   User!
+  amount:                 Float!
+  bill:                   Bill
+  billableFromDate:       DateTime!
+  startDate:              DateTime!
+  endDate:                DateTime!
+  isPartOfPeriodicBill:   Boolean!  @default(value: true)
+  description:            String
+  metadata:               Json
+  createdAt:              DateTime! @createdAt
+  updatedAt:              DateTime! @updatedAt
+  deletedAt:              DateTime
+}
+
+type Bill {
+  id:                     ID!           @id
+  user:                   User!
+  billableFromDate:       DateTime!
+  startDate:              DateTime!
+  endDate:                DateTime!
+  isPeriodic:             Boolean!      @default(value: true)
+  transactions:           [Transaction]
+  status:                 BillStatus
+  createdAt:              DateTime!     @createdAt
+  updatedAt:              DateTime!     @updatedAt
+  deletedAt:              DateTime
+}
+
+enum BillStatus {
+      PENDING
+      APPROVED
+      REJECTED
+      CANCELLED
+      DONE
+}
